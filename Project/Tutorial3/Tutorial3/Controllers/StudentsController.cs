@@ -23,8 +23,8 @@ namespace Tutorial3.Controllers
                     command.Connection = sqlConnection;
                     command.CommandText = "SELECT FirstName, LastName, BirthDate, Name, Semester " +
                                           "FROM Student, Enrollment, Study " +
-                                          "WHERE Study.IdStudy = Enrollment.IdStudy " +
-                                          "AND Student.IdEnrollment = Enrollment.IdEnrollment";
+                                          "WHERE Student.IdEnrollment = Enrollment.IdEnrollment" +
+                                          "AND Study.IdStudy = Enrollment.IdStudy";
                     sqlConnection.Open();
                     var response = command.ExecuteReader();
                     while (response.Read())
@@ -56,14 +56,13 @@ namespace Tutorial3.Controllers
                     command.Connection = sqlConnection;
                     command.CommandText = "SELECT  Semester " +
                                           "FROM Student, Enrollment " +
-                                          "WHERE IdStudent=@idStudent " +
-                                          "AND Student.IdEnrollment = Enrollment.IdEnrollment";
-                    SqlParameter parameter = new SqlParameter();
+                                          "WHERE Student.IdEnrollment = Enrollment.IdEnrollment " +
+                                          "AND IdStudent=@idStudent";
                     command.Parameters.AddWithValue("idStudent", idStudent);
                     sqlConnection.Open();
                     SqlDataReader dataReader = command.ExecuteReader();
                     if (dataReader.Read())
-                        return Ok("Student(" + idStudent + ") studies on this " + Int32.Parse(dataReader["Semester"].ToString()) + " semester");
+                        return Ok("Student(" + idStudent + ") studies on this " + Int32.Parse(dataReader["Semester"].ToString()) + " year");
                     return NotFound("Invalid Input Provided");
                 }
             }
