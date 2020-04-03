@@ -62,7 +62,8 @@ namespace Tutorial3.Controllers
                     sqlConnection.Open();
                     SqlDataReader dataReader = command.ExecuteReader();
                     if (dataReader.Read())
-                        return Ok("Student(" + idStudent + ") studies on this " + Int32.Parse(dataReader["Semester"].ToString()) + " year");
+                         return Ok("Student(" + idStudent + ") started his/her studies in " +
+                                  Int32.Parse(dataReader["Semester"].ToString()) + ".");
                     return NotFound("Invalid Input Provided");
                 }
             }
